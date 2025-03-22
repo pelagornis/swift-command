@@ -1,26 +1,26 @@
 # Getting started
 
-Learn how to quickly execute commands on Swift using PLCommand.
+Learn how to quickly execute commands on Swift using Command.
 
 ## Installation
-PLCommand was deployed as Swift Package Manager. Package to install in a project. Add as a dependent item within the swift manifest.
+Command was deployed as Swift Package Manager. Package to install in a project. Add as a dependent item within the swift manifest.
 ```swift
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/pelagornis/plcommand.git", from: "1.2.1")
+        .package(url: "https://github.com/pelagornis/swift-command", from: "1.2.3")
     ],
     ...
 )
 ```
-Then import the PLCommand from thr location you want to use.
+Then import the Command from thr location you want to use.
 
 ```swift
 import Command
 ```
 
-## Using PLCommand
-PLCommand offers the most commonly used `bash` and `zsh` and `make`, which in addition helps users scale easily.
+## Using Command
+Command offers the most commonly used `bash` and `zsh` and `make`, which in addition helps users scale easily.
 
 If you want to use Bash.
 ```swift
@@ -39,7 +39,7 @@ makeCommand.run("command")
 ```
 
 ### Extension
-PLCommand is easier to scale.
+Command is easier to scale.
 
 ```swift
 extension CommandValues {
@@ -53,4 +53,4 @@ extension CommandValues {
 
 
 ## License
-**plcommand** is under MIT license. See the [LICENSE](LICENSE) file for more info.
+**swift-command** is under MIT license. See the [LICENSE](LICENSE) file for more info.

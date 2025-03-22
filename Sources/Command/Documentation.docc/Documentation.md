@@ -1,6 +1,6 @@
 # ``Command``
 
-PLCommand is a library for Running Command from Swift
+Command is a library for Running Command from Swift
 
 ## Overview
 

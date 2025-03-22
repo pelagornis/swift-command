@@ -1,4 +1,4 @@
-# ``PLCommand/Git``
+# ``Command/Git``
 
 ## Topics
 

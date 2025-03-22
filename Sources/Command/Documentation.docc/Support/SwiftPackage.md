@@ -1,4 +1,4 @@
-# ``PLCommand/SwiftPackage``
+# ``Command/SwiftPackage``
 
 ## Topics
 
