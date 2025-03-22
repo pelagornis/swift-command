@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "plcommand",
+    name: "swift-command",
     platforms: [.macOS(.v10_15)],
     products: [
         .library(
@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.3"),
-        .package(url: "https://github.com/apple/swift-log", from: "1.6.2")
+        .package(url: "https://github.com/apple/swift-log", from: "1.6.3")
     ],
     targets: [
         .target(
