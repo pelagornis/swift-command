@@ -13,7 +13,7 @@ Command was deployed as Swift Package Manager. Package to install in a project. 
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/pelagornis/swift-command.git", from: "1.2.5")
+        .package(url: "https://github.com/pelagornis/swift-command.git", from: "1.3.0")
     ],
     ...
 )
