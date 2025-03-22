@@ -1,24 +1,24 @@
-# PLCommand
+# Swift Command
 ![Official](https://img.shields.io/badge/project-official-green.svg?colorA=303033&colorB=226af6&label=Pelagornis)
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
 ![Swift](https://img.shields.io/badge/Swift-5.7-orange.svg)
-[![License](https://img.shields.io/github/license/pelagornis/PLCommand)](https://github.com/pelagornis/PLCommand/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/pelagornis/swift-command)](https://github.com/pelagornis/swift-command/blob/main/LICENSE)
 ![Platform](https://img.shields.io/badge/platforms-macOS%2010.5-red)
 
 ⌘ Running Command from Swift
 
 ## Installation
-PLCommand was deployed as Swift Package Manager. Package to install in a project. Add as a dependent item within the swift manifest.
+Command was deployed as Swift Package Manager. Package to install in a project. Add as a dependent item within the swift manifest.
 ```swift
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/pelagornis/plcommand.git", from: "1.2.5")
+        .package(url: "https://github.com/pelagornis/swift-command.git", from: "1.2.5")
     ],
     ...
 )
 ```
-Then import the PLCommand from thr location you want to use.
+Then import the `Command` from thr location you want to use.
 
 ```swift
 import Command
@@ -26,7 +26,7 @@ import Command
 
 ## Documentation
 The documentation for releases and ``main`` are available here:
-- [``main``](https://pelagornis.github.io/plcommand/main/documentation/command)
+- [``main``](https://pelagornis.github.io/swift-command/main/documentation/command)
 
 
 ## Using
@@ -53,11 +53,11 @@ makeCommand.run("command")
 Create a shortcut name for a command.
 ```swift
 let git = Alias(executableURL: "/usr/bin/git")
-git.run("command")
+git.run("command", directory: "/path/to/directory")
 ```
 
 ## Frequently Used Commands
-PLCommand supports frequently used features.
+Command supports frequently used features.
 
 Support `Git` Command
 ```swift
@@ -113,7 +113,7 @@ tuist.run("tuist command")
 ```
 
 ### Extension
-PLCommand is easier to scale.
+Command is easier to scale.
 
 ```swift
 extension CommandValues {
@@ -128,4 +128,4 @@ extension CommandValues {
 ```
 
 ## License
-**plcommand** is under MIT license. See the [LICENSE](LICENSE) file for more info.
+**swift-command** is under MIT license. See the [LICENSE](LICENSE) file for more info.
