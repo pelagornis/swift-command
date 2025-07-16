@@ -1,9 +1,9 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
     name: "swift-command",
-    platforms: [.macOS(.v10_15)],
+    platforms: [.macOS(.v11)],
     products: [
         .library(
             name: "Command",
