@@ -1,20 +1,21 @@
 import Foundation
 import Logging
+import Darwin
 
-/// The Task is Operation to execute Command.
+/// Provides methods to execute commands synchronously and asynchronously.
 public struct Task {
     let logger: Logger?
-
+    /// Creates a new Task instance.
     public init(logger: Logger? = nil) {
         self.logger = logger
     }
-
-    /// running command.
+    /// Runs a command synchronously.
+    /// - Parameters:
+    ///   - request: The command request to execute.
+    ///   - log: Whether to log output.
+    /// - Returns: The result of the command execution.
     @discardableResult
-    public func run(
-        _ request: Request,
-        log: Bool
-    ) -> Result {
+    public func run(_ request: Request, log: Bool) -> Result {
         let process = prepare(request)
 
         let outputPipe = Pipe()
@@ -56,7 +57,9 @@ public struct Task {
 }
 
 public extension Task {
-    /// Set the required parts before running the process
+    /// Prepares a Process for the given request.
+    /// - Parameter request: The command request.
+    /// - Returns: A configured Process instance.
     func prepare(_ request: Request) -> Process {
         let process = Process()
         if #available(macOS 10.13, *) {
@@ -77,8 +80,10 @@ public extension Task {
         }
         return process
     }
-
-    /// FileHandle preprocessing
+    
+    /// Reads all data from a file handle and returns it as a string.
+    /// - Parameter fileHandle: The file handle to read from.
+    /// - Returns: The string contents of the file handle.
     func fileHandleData(fileHandle: FileHandle) throws -> String? {
         var data: Data?
         if #available(macOS 10.15.4, *) {
@@ -88,8 +93,9 @@ public extension Task {
         }
         return data?.output
     }
-
-    /// Process preprocessing
+    
+    /// Runs a process synchronously.
+    /// - Parameter process: The process to run.
     func run(process: Process) throws {
         if #available(macOS 10.13, *) {
             try process.run()

@@ -1,7 +1,9 @@
-/// A collection of globally available commands.
+/// A collection of globally available command-line tool aliases.
+///
+/// Extend this struct to add custom command aliases.
 public struct CommandValues: Sendable {
+    /// The current task-local command values.
     @TaskLocal public static var current = Self()
-    //MARK: - Initializer
-    /// Creates a command values instance.
+    /// Creates a new instance of `CommandValues`.
     public init() {}
 }

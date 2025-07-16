@@ -1,16 +1,13 @@
-/// An alias for a command that can be run with `Command`.
+/// An alias for a command-line tool that can be run with `Command`.
 public struct Alias {
     /// The URL of the executable to run.
     public let executableURL: String
-    
-    /// The arguments to pass to the `-c` option of the command.
+    /// The arguments to pass to the `-c` option of the command, if any.
     public let dashc: Arguments?
-    
     /// Creates a new `Alias`.
-    ///
     /// - Parameters:
-    ///   - executableURL: The URL of the executable to run.
-    ///   - dashc: The arguments to pass to the `-c` option of the command.
+    ///   - executableURL: The path to the executable.
+    ///   - dashc: The arguments for the `-c` option, if needed.
     public init(
         executableURL: String,
         dashc: Arguments? = nil
@@ -20,15 +17,13 @@ public struct Alias {
     }
 }
 
-
 public extension Alias {
-    /// Prepares a `Command.Request` for the alias.
-    ///
+    /// Prepares a `Request` for this alias.
     /// - Parameters:
-    ///   - arguments: The arguments to pass to the command.
-    ///   - environment: The environment in which to run the command.
-    ///   - directory: The directory in which to run the command.
-    /// - Returns: A `Command.Request` for the alias.
+    ///   - arguments: Arguments to pass.
+    ///   - environment: Environment variables.
+    ///   - directory: Working directory.
+    /// - Returns: A `Request` instance.
     func prepare(
         _ arguments: Arguments?,
         environment: Environment?,
@@ -43,13 +38,8 @@ public extension Alias {
         )
     }
 
-    /// Runs the alias.
-    ///
-    /// - Parameters:
-    ///   - arguments: The arguments to pass to the command.
-    ///   - environment: The environment in which to run the command.
-    ///   - directory: The directory in which to run the command.
-    /// - Returns: The result of running the alias.
+    /// Runs the alias with the given arguments and options.
+    /// - Returns: The result of running the command.
     @discardableResult
     func run(
         _ arguments: Arguments? = nil,

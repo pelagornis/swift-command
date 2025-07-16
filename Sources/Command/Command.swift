@@ -1,34 +1,13 @@
-/// A property wrapper for commands.
+/// A property wrapper for accessing command-line tools via `CommandValues`.
 ///
-/// All Commands are stored in  ``CommandValues`` and one uses this property wrapper.
-///
+/// Usage:
 /// ```swift
-/// final class Feature {
-///    @Command(\.zsh) var zsh
-///    @Command(\.bash) var bash
-///
-///    // ...
-/// }
-/// ```
-///
-/// ```swift
-/// struct Feature {
-///    @Command(\.zsh) var zsh
-///    @Command(\.bash) var bash
-///
-///    // ...
-/// }
-/// ```
-/// It can be used in other situations too
-/// ```swift
-/// func run() {
-///    @Command(\.zsh) var zsh
-///    zsh.run("command")
-/// }
+/// @Command(\.bash) var bash
+/// let result = bash.run("echo Hello")
 /// ```
 @propertyWrapper
 public struct Command<Value>: @unchecked Sendable {
-
+    /// The key path to the command value in CommandValues.
     private let keyPath: KeyPath<CommandValues, Value>
 
     /// Creates a command property to read the specified key path.

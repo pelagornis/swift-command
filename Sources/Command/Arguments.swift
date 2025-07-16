@@ -1,22 +1,17 @@
-/// A command-line command with arguments.
+/// Represents command-line arguments.
 public struct Arguments {
-    
-    /// The raw values of the arguments.
+    /// The raw argument values.
     public let rawValue: [String]
-    
-    /// Create arguments from a single string.
-    ///
+    /// Creates arguments from a single string.
     /// - Parameter value: The string to use as the argument.
     public init(_ value: String) {
         self.init([value])
     }
-    
-    /// Create arguments from an array of strings.
-    ///
+    /// Creates arguments from an array of strings.
     /// - Parameter values: The array of strings to use as arguments.
     public init(_ values: [String]) {
-        let command = values.joined(separator: " ")
-        rawValue = [command]
+        let value = values.joined(separator: " ")
+        rawValue = [value]
     }
 }
 
