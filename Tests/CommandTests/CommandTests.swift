@@ -51,4 +51,19 @@ final class CommandTests: XCTestCase {
         swiftPackage.build(at: packagePath)
         XCTAssertTrue(bash.run("cd \(packagePath.escapingSpaces) && ls -a").output.contains(".build"))
     }
+
+    func testArgumentsEquatableAndLiterals() throws {
+        let a1 = Arguments("echo hello")
+        let a2: Arguments = "echo hello"
+        let a3: Arguments = ["echo", "hello"]
+        XCTAssertEqual(a1, a2)
+        XCTAssertEqual(a1, a3)
+    }
+
+    func testFailingCommand() throws {
+        @Command(\.bash) var bash
+        let fail = bash.run("not_a_real_command_12345")
+        XCTAssertNotEqual(fail.statusCode, 0)
+        XCTAssertFalse(fail.output.isEmpty || fail.errorOutput.isEmpty)
+    }
 }
