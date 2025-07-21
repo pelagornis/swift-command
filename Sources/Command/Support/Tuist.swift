@@ -2,6 +2,18 @@
 public struct Tuist {
     @Command(\.bash) private var bash
 
+    /// Installs any remote content (e.g.dependencies) necessary to interact with the project.
+    @discardableResult
+    public func install(at path: String = ".", _ options: String = "") -> Result {
+        return run(at: path, ["install", options])
+    }
+
+    /// Warms the local and remote cache.
+    @discardableResult
+    public func cache(at path: String = ".", _ arguments: [String]) -> Result {
+        return run(at: path, ["cache"] + arguments)
+    }
+
     /// Build the project in the current directory
     @discardableResult
     public func build(at path: String = ".") -> Result {
@@ -18,12 +30,6 @@ public struct Tuist {
     @discardableResult
     public func clean(at path: String = ".", _ subset: String = "") -> Result {
         return run(at: path, ["clean", subset])
-    }
-
-    /// Dependencies can be fetched by running the following command
-    @discardableResult
-    public func fetch(at path: String = ".", _ options: String = "") -> Result {
-        return run(at: path, ["fetch", options])
     }
 
     /// Editing your projects command
@@ -74,16 +80,16 @@ public struct Tuist {
         return run(at: path, ["test"])
     }
 
-    /// Test a specific scheme
-    @discardableResult
-    public func testScheme(at path: String = ".", _ schemeName: String) -> Result {
-        return run(at: path, ["test", schemeName])
-    }
-
     /// Test the project with arguments
     @discardableResult
     public func test(at path: String = ".",_ arguments: [String]) -> Result {
         return run(at: path, ["test"] + arguments)
+    }
+
+    /// tuist xcodebuild extends the xcodebuild CLI with server capabilities such as selective testing or analytics.
+    @discardableResult
+    public func xcodebuild(at path: String = ".",_ arguments: [String]) -> Result {
+        return run(at: path, ["xcodebuild"] + arguments)
     }
 
     /// Running Tuist Command
