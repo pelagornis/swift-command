@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "swift-file",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pelagornis/swift-file",
+      "state" : {
+        "revision" : "579ad2e67fbd77526a8c26b2cf40c78486434c55",
+        "version" : "1.4.0"
+      }
+    },
+    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
