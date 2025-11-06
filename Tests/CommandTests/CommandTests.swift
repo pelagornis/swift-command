@@ -1,4 +1,5 @@
 import XCTest
+import File
 @testable import Command
 
 final class CommandTests: XCTestCase {
@@ -14,42 +15,45 @@ final class CommandTests: XCTestCase {
     func testGit() throws {
         @Command(\.git) var git
         @Command(\.bash) var bash
-        let tempFolderPath = NSTemporaryDirectory()
-        bash.run("cd \(tempFolderPath.escapingSpaces) && rm -rf GitTestOrigin")
-        bash.run("cd \(tempFolderPath.escapingSpaces) && rm -rf GitTestClone")
+        let tempFolderPath = Path(rawValue: NSTemporaryDirectory())!
+        let originPath = tempFolderPath + Path(rawValue: "GitTestOrigin")!
+        let clonePath = tempFolderPath + Path(rawValue: "GitTestClone")!
+        
+        bash.run("cd \(tempFolderPath.rawValue.escapingSpaces) && rm -rf GitTestOrigin", directory: tempFolderPath)
+        bash.run("cd \(tempFolderPath.rawValue.escapingSpaces) && rm -rf GitTestClone", directory: tempFolderPath)
 
-        let originPath = tempFolderPath + "GitTestOrigin"
         let mkdirCommand = "mkdir".appending(argument: "GitTestOrigin")
-        bash.run("cd \(tempFolderPath.escapingSpaces) && \(mkdirCommand)")
+        bash.run("cd \(tempFolderPath.rawValue.escapingSpaces) && \(mkdirCommand)", directory: tempFolderPath)
         git.`init`(at: originPath)
         var echoCommand = "echo"
         echoCommand.append(argument: "Hello world")
         echoCommand.append(" > ")
         echoCommand.append(argument: "Test")
-        bash.run("cd \(originPath.escapingSpaces) && \(echoCommand)")
+        bash.run("cd \(originPath.rawValue) && \(echoCommand)", directory: originPath)
         git.add(at: originPath)
         git.commit(at: originPath, "Commit")
-        let clonePath = tempFolderPath + "GitTestClone"
-        let cloneURL = URL(fileURLWithPath: originPath)
+        let cloneURL = URL(fileURLWithPath: originPath.rawValue)
         git.clone(at: tempFolderPath, cloneURL, to: "GitTestClone")
 
-        let filePath = clonePath + "/Test"
-        XCTAssertEqual(bash.run("cat \(filePath)").output, "Hello world")
+        let filePath = clonePath + Path(rawValue: "Test")!
+        XCTAssertEqual(bash.run("cat \(filePath.rawValue)", directory: clonePath).output, "Hello world")
     }
 
     func testSwiftPackageManagerCommands() throws {
         @Command(\.bash) var bash
         @Command(\.package) var swiftPackage
-        let tempFolderPath = NSTemporaryDirectory()
-        bash.run("cd \(tempFolderPath.escapingSpaces) && rm -rf SwiftPackageManagerTest")
-        bash.run("cd \(tempFolderPath.escapingSpaces) && mkdir SwiftPackageManagerTest")
+        let tempFolderPath = Path(rawValue: NSTemporaryDirectory())!
+        let packagePath = tempFolderPath + Path(rawValue: "SwiftPackageManagerTest")!
         
-        let packagePath = tempFolderPath + "/SwiftPackageManagerTest"
+        bash.run("cd \(tempFolderPath.rawValue.escapingSpaces) && rm -rf SwiftPackageManagerTest", directory: tempFolderPath)
+        bash.run("cd \(tempFolderPath.rawValue.escapingSpaces) && mkdir SwiftPackageManagerTest", directory: tempFolderPath)
+        
         swiftPackage.create(at: packagePath)
-        XCTAssertFalse(bash.run("cat \(packagePath)/Package.swift").output.isEmpty)
+        let packageSwiftPath = packagePath + Path(rawValue: "Package.swift")!
+        XCTAssertFalse(bash.run("cat \(packageSwiftPath.rawValue)", directory: packagePath).output.isEmpty)
         
         swiftPackage.build(at: packagePath)
-        XCTAssertTrue(bash.run("cd \(packagePath.escapingSpaces) && ls -a").output.contains(".build"))
+        XCTAssertTrue(bash.run("cd \(packagePath.rawValue.escapingSpaces) && ls -a", directory: packagePath).output.contains(".build"))
     }
 
     func testArgumentsEquatableAndLiterals() throws {
