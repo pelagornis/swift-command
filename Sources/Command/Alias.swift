@@ -1,3 +1,4 @@
+import File
 /// An alias for a command-line tool that can be run with `Command`.
 public struct Alias {
     /// The URL of the executable to run.
@@ -37,20 +38,20 @@ public extension Alias {
             directory: directory
         )
     }
-
+    
     /// Runs the alias with the given arguments and options.
     /// - Returns: The result of running the command.
     @discardableResult
     func run(
         _ arguments: Arguments? = nil,
         environment: Environment = .global,
-        directory: String? = nil,
+        directory: Path? = .current,
         log: Bool = false
     ) -> Result {
         let req = prepare(
             arguments,
             environment: environment,
-            directory: directory
+            directory: directory?.rawValue
         )
         return Task().run(req, log: log)
     }

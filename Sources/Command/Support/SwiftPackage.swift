@@ -1,3 +1,5 @@
+import File
+
 /// Support Swift Package Command
 public struct SwiftPackage {
     @Command(\.bash) private var bash
@@ -19,19 +21,19 @@ public struct SwiftPackage {
     ///
     /// - Parameter type: Swift Package Type for options
     @discardableResult
-    public func create(at path: String = ".", type: SwiftPackageType = .library) -> Result {
+    public func create(at path: Path?, type: SwiftPackageType = .library) -> Result {
         return run(at: path, ["package", "init", "--type", "\(type.rawValue)"])
     }
 
     /// Update package dependencies
     @discardableResult
-    public func update(at path: String = ".") -> Result {
+    public func update(at path: Path?) -> Result {
         return run(at: path, ["package", "update"])
     }
 
     /// Generate Xcode Project for a Swift Package
     @discardableResult
-    public func generateXcodeproj(at path: String = ".") -> Result {
+    public func generateXcodeproj(at path: Path?) -> Result {
         return run(at: path, ["package", "generate-xcodeproj"])
     }
 
@@ -39,7 +41,7 @@ public struct SwiftPackage {
     ///
     /// - Parameter configuration: swift build configuration options
     @discardableResult
-    public func build(at path: String = ".", configuration: SwiftBuildConfiguration = .debug) -> Result {
+    public func build(at path: Path?, configuration: SwiftBuildConfiguration = .debug) -> Result {
         return run(at: path, ["build", "-c", "\(configuration.rawValue)"])
     }
 
@@ -47,13 +49,13 @@ public struct SwiftPackage {
     ///
     /// - Parameter configuration: swift test configuration options
     @discardableResult
-    public func test(at path: String = ".", configuration: SwiftBuildConfiguration = .debug) -> Result {
+    public func test(at path: Path?, configuration: SwiftBuildConfiguration = .debug) -> Result {
         return run(at: path, ["test", "-c", "\(configuration.rawValue)"])
     }
 
     /// Running Swift Command
     @discardableResult
-    public func run(at path: String?, _ arguments: [String]) -> Result {
+    public func run(at path: Path?, _ arguments: [String]) -> Result {
         let command = ["swift"] + arguments
         let arguments = Arguments(command)
         return bash.run(arguments, directory: path)
