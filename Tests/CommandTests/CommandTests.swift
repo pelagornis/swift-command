@@ -70,4 +70,38 @@ final class CommandTests: XCTestCase {
         XCTAssertNotEqual(fail.statusCode, 0)
         XCTAssertFalse(fail.output.isEmpty || fail.errorOutput.isEmpty)
     }
+    
+    func testCommandWithPathDirectory() throws {
+        @Command(\.bash) var bash
+        let tempFolderPath = Path(rawValue: NSTemporaryDirectory())!
+        let testDirPath = tempFolderPath + Path(rawValue: "PathTestDir")!
+        let testFilePath = testDirPath + Path(rawValue: "test.txt")!
+        
+        // Clean up
+        bash.run("rm -rf \(testDirPath.rawValue.escapingSpaces)", directory: tempFolderPath)
+        
+        // Create directory using Path
+        bash.run("mkdir \(testDirPath.rawValue.escapingSpaces)", directory: tempFolderPath)
+        
+        // Create a file in the directory using Path
+        bash.run("echo 'Hello from Path test' > \(testFilePath.rawValue.escapingSpaces)", directory: testDirPath)
+        
+        // Verify file was created in the correct directory using Path
+        let lsResult = bash.run("ls", directory: testDirPath)
+        XCTAssertEqual(lsResult.statusCode, 0)
+        XCTAssertTrue(lsResult.output.contains("test.txt"))
+        
+        // Read the file back to verify directory path worked correctly
+        let result = bash.run("cat test.txt", directory: testDirPath)
+        XCTAssertEqual(result.statusCode, 0)
+        XCTAssertTrue(result.output.contains("Hello from Path test"))
+        
+        // Verify the file exists at the expected path
+        let fileCheckResult = bash.run("test -f \(testFilePath.rawValue.escapingSpaces) && echo 'exists'", directory: testDirPath)
+        XCTAssertEqual(fileCheckResult.statusCode, 0)
+        XCTAssertTrue(fileCheckResult.output.contains("exists"))
+        
+        // Clean up
+        bash.run("rm -rf \(testDirPath.rawValue.escapingSpaces)", directory: tempFolderPath)
+    }
 }
