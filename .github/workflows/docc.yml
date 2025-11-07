@@ -14,14 +14,14 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - name: Checkout Package
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Checkout gh-pages Branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: docs-out
@@ -47,17 +47,17 @@ jobs:
                 swift package \
                 --allow-writing-to-directory docs-out/"$tag" \
                 generate-documentation \
-                --target Command \
+                --target File \
                 --output-path docs-out/"$tag" \
                 --transform-for-static-hosting \
-                --hosting-base-path /swift-command/"$tag" \
+                --hosting-base-path /swift-file/"$tag" \
                     && echo "✅ Documentation generated for "$tag" release." \
                     || echo "⚠️ Documentation skipped for "$tag".";
             fi;
           done
-
+      
       - name: Fix permissions
-        run: "sudo chown -R $USER docs-out"
+        run: 'sudo chown -R $USER docs-out'
       - name: Publish documentation to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
