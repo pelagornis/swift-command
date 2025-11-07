@@ -1,11 +1,11 @@
 import Foundation
 
 /// Represents an environment for a command to run in.
-public struct Environment {
+public struct Environment: Sendable {
     /// The environment variables.
     public private(set) var data: [String : String] = [:]
     /// The global environment for all commands.
-    public static var global = Environment()
+    public static let global = Environment()
     /// Creates a new environment.
     /// - Parameter data: The environment variables for the command. Defaults to the current process's environment.
     public init(_ data: [String : String] = ProcessInfo.processInfo.environment) {
