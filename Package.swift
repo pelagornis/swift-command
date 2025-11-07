@@ -13,7 +13,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.3"),
         .package(url: "https://github.com/apple/swift-log", from: "1.6.3"),
-        .package(url: "https://github.com/pelagornis/swift-file", .upToNextMajor(from: "1.4.0"))
+        .package(url: "https://github.com/pelagornis/swift-file", .upToNextMajor(from: "1.4.1"))
     ],
     targets: [
         .target(

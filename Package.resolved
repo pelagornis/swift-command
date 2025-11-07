@@ -1,4 +1,5 @@
 {
+  "originHash" : "07ede6718554606b23201277001fec6cc08e99dd0bd86ea18ae0e5c855a53f6f",
   "pins" : [
     {
       "identity" : "swift-docc-plugin",
@@ -23,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pelagornis/swift-file",
       "state" : {
-        "revision" : "579ad2e67fbd77526a8c26b2cf40c78486434c55",
-        "version" : "1.4.0"
+        "revision" : "3cc99a6e0fad2985d52a58ec13e1d3f526ddda61",
+        "version" : "1.4.1"
       }
     },
     {
@@ -37,5 +38,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
